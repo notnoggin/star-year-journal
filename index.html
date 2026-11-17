@@ -1,14 +1,57 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/star.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Star Year — Daily Memory Sky</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#a78bfa" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>Star Year — Daily Memory Sky</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <style>
+    :root { --bg: #0a0612; --fg: #e0d4ff; --accent: #a78bfa; --card: #1a1028; --muted: #6b5b95; }
+    [data-theme="day"] { --bg: #f8f4ef; --fg: #2d2416; --accent: #d97706; --card: #ffffff; --muted: #a8a29e; }
+    [data-theme="cosmic"] { --bg: #050a1a; --fg: #c7d2fe; --accent: #22d3ee; --card: #0f172a; --muted: #64748b; }
+    [data-theme="amber"] { --bg: #1c1210; --fg: #fde68a; --accent: #f59e0b; --card: #292018; --muted: #a78b6a; }
+    body { background: var(--bg); color: var(--fg); font-family: 'Inter', system-ui, sans-serif; margin: 0; }
+    .doodle { font-family: 'Caveat', cursive; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    const { useState, useEffect } = React;
+    const mockMemories = {
+      '2026-11-14': { text: "I notice that I've been trying really hard and focusing on just building a good life, and I've tied my entire happiness and good living to the event of making money and not until then I wouldn't be able to live life, but I want to change that." },
+      '2026-11-13': { text: "Took the long way home today. The light on the river was the kind you want to keep." },
+    };
+    function App() {
+      const [theme, setTheme] = useState('night');
+      const [view, setView] = useState('sky');
+      const [island, setIsland] = useState(null);
+      useEffect(() => { document.documentElement.setAttribute('data-theme', theme); }, [theme]);
+      const plant = () => { setIsland('Star planted ✦'); setTimeout(() => setIsland(null), 2500); setView('sky'); };
+      return React.createElement('div', { className: 'min-h-screen p-4 max-w-md mx-auto' },
+        island && React.createElement('div', { className: 'fixed top-3 left-1/2 -translate-x-1/2 bg-black text-white px-4 py-2 rounded-full text-sm z-50' }, island),
+        React.createElement('h1', { className: 'doodle text-4xl text-[var(--accent)] mb-2' }, '2026'),
+        React.createElement('p', { className: 'text-sm text-[var(--muted)] mb-6' }, '3 stars planted · 1%'),
+        React.createElement('div', { className: 'bg-[var(--card)] rounded-3xl p-4 mb-4' },
+          React.createElement('div', { className: 'text-xs text-[var(--muted)] mb-2' }, 'Your sky this year'),
+          React.createElement('div', { className: 'grid grid-cols-7 gap-1' },
+            Array.from({length: 35}).map((_, i) => React.createElement('div', { key: i, className: 'aspect-square rounded-full bg-white/5 flex items-center justify-center text-xs' }, i % 8 === 0 ? '★' : '·'))
+          )
+        ),
+        React.createElement('button', { onClick: plant, className: 'w-full py-4 rounded-2xl bg-[var(--accent)] text-black doodle text-xl mb-4' }, '+ Plant today\'s star'),
+        React.createElement('div', { className: 'flex gap-2' },
+          ['night','day','cosmic','amber'].map(t => React.createElement('button', { key: t, onClick: () => setTheme(t), className: 'flex-1 py-2 rounded-xl text-xs ' + (theme===t ? 'bg-[var(--accent)] text-black' : 'bg-[var(--card)]') }, t))
+        ),
+        React.createElement('p', { className: 'text-center text-xs text-[var(--muted)] mt-8' }, 'Open in Chrome → menu → Install app')
+      );
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
+  </script>
+</body>
 </html>
