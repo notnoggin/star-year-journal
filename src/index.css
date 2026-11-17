@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0a0612;
+  --fg: #e0d4ff;
+  --accent: #a78bfa;
+  --card: #1a1028;
+  --muted: #6b5b95;
+}
+
+[data-theme="day"] {
+  --bg: #f8f4ef;
+  --fg: #2d2416;
+  --accent: #d97706;
+  --card: #ffffff;
+  --muted: #a8a29e;
+}
+
+[data-theme="cosmic"] {
+  --bg: #050a1a;
+  --fg: #c7d2fe;
+  --accent: #22d3ee;
+  --card: #0f172a;
+  --muted: #64748b;
+}
+
+[data-theme="amber"] {
+  --bg: #1c1210;
+  --fg: #fde68a;
+  --accent: #f59e0b;
+  --card: #292018;
+  --muted: #a78b6a;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+.doodle {
+  font-family: 'Caveat', cursive;
+}
+
+.star-doodle {
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+.twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
